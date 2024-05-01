@@ -1,15 +1,21 @@
+# Membuat to-do list dengan fitur CRUD
+
+import os
+
 class todo:
 
     def __init__(self, tugas):
         self.tugas = tugas
         self.tugas_baru = None
         self.nomor_hapus = None
+        self.nomor_rubah = None
         self.dihapus = None
+        self.load()
 
     def tampil(self):
 
         if self.tugas: # ngecek ada isinya apa ndak
-            print("Berikut adalah daftar tugas anda :")
+            print("Berikut adalah daftar tugas anda :\n")
             for nomor, item in enumerate(self.tugas, start = 1):
                 print(f"{nomor}. {item}")
         else:
@@ -28,6 +34,7 @@ class todo:
 
             if self.tugas_baru:
                 self.tugas.append(self.tugas_baru)
+                self.save()
 
     def hapus(self):
 
@@ -37,11 +44,12 @@ class todo:
 
         print("")
         self.tampil()
-        self.nomor_hapus = int(input("Tugas nomor berapa yang ingin dihapus?"))
+        self.nomor_hapus = int(input("Tugas nomor berapa yang ingin dihapus? "))
         print("")
 
         if 1 <= self.nomor_hapus <= len(self.tugas):
             self.dihapus = self.tugas.pop(self.nomor_hapus - 1)
+            self.save()
             print(f"Tugas : {self.dihapus}\nBerhasil dihapus dari daftar\n")
 
         if self.tugas:
@@ -49,3 +57,38 @@ class todo:
         else:
             print("Belum ada tugas.\nSilahkan pilih opsi 2 untuk menambahkan tugas baru\n")
             return
+
+    def rubah(self):
+
+        if not self.tugas:
+            print("Belum ada tugas.\nSilahkan pilih opsi 2 untuk menambahkan tugas baru")
+            return
+
+        self.tampil()
+        self.nomor_rubah = int(input("Tugas nomor berapa yang ingin dirubah? ")) - 1
+
+        if 0 <= self.nomor_rubah < len(self.tugas):
+            self.tugas_baru = input("\nKetikan tugas baru : ")
+            self.tugas[self.nomor_rubah] = self.tugas_baru
+            self.save()
+            print(f"Tugas No : {self.nomor_rubah + 1}\nBerhasil dirubah\n")
+
+        if self.tugas:
+            self.tampil()
+        else:
+            print("Belum ada tugas.\nSilahkan pilih opsi 2 untuk menambahkan tugas baru\n")
+            return
+
+    def save(self): #save kedalam file todo.txt
+
+        with open("todo.txt", "w") as file:
+            for baris in self.tugas:
+                file.write(baris + "\n")
+
+    def load(self): # ngeload todo.txt
+
+        if os.path.exists("todo.txt"):
+            with open("todo.txt", "r") as file:
+                for baris in file:
+                    self.tugas.append(baris.strip())
+        return self.tugas

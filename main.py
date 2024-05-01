@@ -17,18 +17,21 @@ if __name__ == '__main__':
         print("Menu to-do list : \n")
         print("1. Daftar Tugas")
         print("2. Tambah Tugas")
-        print("3. Hapus Tugas")
-        print("4. keluar aplikasi\n")
+        print("3. Rubah Tugas")
+        print("4. Hapus Tugas")
+        print("5. keluar aplikasi\n")
 
-        opsi = input("Pilih 1 / 2 / 3 / 4 : ")
+        opsi = input("Pilih 1 / 2 / 3 / 4 / 5 : ")
 
         if opsi == "1":
             tugasku.tampil()
         elif opsi == "2":
             tugasku.tambah()
         elif opsi == "3":
-            tugasku.hapus()
+            tugasku.rubah()
         elif opsi == "4":
+            tugasku.hapus()
+        elif opsi == "5":
             print(f"Terima kasih, {nama}!")
             break
         else:
