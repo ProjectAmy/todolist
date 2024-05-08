@@ -44,7 +44,16 @@ class todo:
 
         print("")
         self.tampil()
-        self.nomor_hapus = int(input("Tugas nomor berapa yang ingin dihapus? "))
+        print("00 - Batal menghapus\n")
+
+        while True:
+            try:
+                self.nomor_hapus = int(input("Tugas nomor berapa yang ingin dihapus? "))
+                if self.nomor_hapus == '00':
+                    break
+                break
+            except ValueError:
+                print("Salah input! Masukan bilangan bulat!")
         print("")
 
         if 1 <= self.nomor_hapus <= len(self.tugas):
@@ -65,7 +74,15 @@ class todo:
             return
 
         self.tampil()
-        self.nomor_rubah = int(input("Tugas nomor berapa yang ingin dirubah? ")) - 1
+        print("00 - Batal merubah\n")
+        while True:
+            try:
+                self.nomor_rubah = int(input("Tugas nomor berapa yang ingin dirubah? ")) - 1
+                if self.nomor_rubah == '00':
+                    break
+                break
+            except ValueError:
+                print("Salah input! Masukan bilangan bulat!")
 
         if 0 <= self.nomor_rubah < len(self.tugas):
             self.tugas_baru = input("\nKetikan tugas baru : ")
